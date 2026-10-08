@@ -51,7 +51,8 @@ wrong in predictable ways. This consultancy is set up to avoid them.
 |---|---|---|---|
 | **Consultancy Representative** | Wren | Interviews you, then picks and writes a tech lead who suits you and your project | Yes, at the start, and whenever the lead's style isn't working for you |
 | **Technical Lead** | Named and chosen with you during the interview | Writes the spec, design and plan with you; builds and runs the team; reviews their work. Writes no code | Yes, for the rest of the project |
-| **Developers** (up to 4) | Named by the lead | Write the code, each from their own checklist | No |
+| **Developers** | Named by the lead | Write the code, each from their own checklist, and draft tutorials for your tasks | No |
+| **Context Manager** | Dexter | Moves finished or outdated material out of the documents agents read every session, so they stay lean. Only works when the lead calls him in | No |
 | **You** | The client | Approve the spec, handle accounts and keys, do your checklist, join debriefs | — |
 
 ## How a project runs
@@ -76,7 +77,9 @@ flowchart TD
 - **`DESIGN.md`** says *how* it will be built: system diagrams, how the code
   is organized, and the style guide. How closely you review it is up to you.
 - **`PHASES.md`** is the high-level plan: every phase and who's involved in
-  each one.
+  each one. It also records two limits you agree with the lead: how many
+  developers work in one phase (3 by default) and how many hours of hands-on
+  work one phase can ask of you (20 by default).
 
 The step-by-step version for your project is written to
 `docs/procedures/ONBOARDING.md` during the interview.
@@ -85,21 +88,34 @@ The step-by-step version for your project is written to
 
 ```mermaid
 flowchart TD
-    phase(["Phase i"]) --> lists["Lead writes each agent's checklist"]
+    phase(["Phase i"]) --> kickoff["Kickoff: tutorials on or off?"]
+    kickoff --> lists["Lead writes each agent's checklist"]
     lists --> devs["Developers work in parallel"]
     lists --> you{"Anything needed<br>from you?"}
-    you -->|Yes| yours["Your checklist<br>(+ tutorials if you need help)"]
+    you -->|Yes| yours["Your checklist<br>(+ a tutorial per hands-on task)"]
     devs --> done{"All checklists<br>done?"}
     yours --> done
     done -->|Yes| debrief["Debrief with the lead"]
     debrief --> realign{"Want changes?"}
     realign -->|Yes| revisit["Realignment: revisit the spec and design"]
-    realign -->|No| next["Next phase"]
+    realign -->|No| dexter["Lead decides whether<br>to call in Dexter"]
+    revisit --> dexter
+    dexter --> go{"Start the next<br>phase now?"}
+    go -->|Yes| next["Next phase"]
+    go -->|No| freeze["Lead freezes the project<br>so the next session resumes"]
 ```
 
-At the end of every phase, the lead debriefs you: what got done, what it
-means for you, what's next and any risks. That's your moment to ask for
-changes, which is called a **realignment**.
+At the start of every phase, the lead asks whether you want tutorials this
+time. They're on unless you say otherwise.
+
+At the end, the lead follows `docs/procedures/DEBRIEF.md`. They tell you what
+got done, what it means for you, what's next and any risks. That's your
+moment to ask for changes, which is called a **realignment**. The lead then
+decides whether Dexter should tidy the documents, and asks whether you want
+to start the next phase now. If you'd rather stop there, the lead
+**freezes** the project: they save where things stand to
+`docs/FROZEN_STATE.md`, and your next session picks up from exactly that
+point. The same happens if you stop partway through a phase.
 
 ## Getting started
 
@@ -121,7 +137,8 @@ changes, which is called a **realignment**.
    start the lead with `claude --agent tech_lead_<name>` instead.)
 4. From then on, **every session is with your lead**. Start a fresh session
    whenever you like. The project's state lives in the documents, not in the
-   chat, so nothing is lost.
+   chat, so nothing is lost. If the lead froze the project last time, they
+   pick up from there first.
 
 To reach Wren again later, run `claude --agent consultant_rep_wren`. To
 change the default yourself, edit the `"agent"` value in
@@ -136,7 +153,8 @@ Your tasks are simple, but the project can't move without them:
 - **Approve `CLIENT_SPECS.md`,** and any change to it later.
 - **Review** whatever you chose to review during the interview. That's the
   spec at minimum, and the design too if you want.
-- **Your checklist,** in `client/checklist.md`, when a phase needs you.
+- **Your checklist,** in `client/checklist.md`, when a phase needs you. No
+  phase asks for more hands-on hours than the limit you set (20 by default).
 - **Debriefs** at the end of each phase.
 
 ## Getting the most out of it
@@ -152,6 +170,8 @@ Your tasks are simple, but the project can't move without them:
 - **Start small.** A focused first version that works beats an ambitious
   one that stalls. Wren will help you trim, and extras can come in later
   phases.
+- **Pick a tutorial depth.** Wren asks how much detail you want in
+  tutorials: just the steps, the steps plus why, or every concept explained.
 - **Shape your lead.** You pick from the candidates, and you can ask for
   tweaks ("like that one, but more direct").
 
@@ -164,8 +184,11 @@ Your tasks are simple, but the project can't move without them:
 **During phases**
 - **Do your checklist promptly.** Developers may be waiting on an account or
   key only you can create.
-- **Ask for a tutorial** whenever a task is unclear. They go in
-  `client/tutorials/`, so you can reuse them.
+- **Use the tutorials.** Every hands-on task comes with one unless you
+  turned tutorials off at the kickoff. They all live in `client/tutorials/`,
+  so you can reuse them. If a task is still unclear, ask the lead.
+- **Say when you're stopping.** "That's it for today" is enough. The lead
+  saves where things stand so the next session picks up from there.
 - **Use the debrief.** Ask "what does this mean for me?" or "can you show me
   it working?"
 - **Realign early.** If something's off, say so at the debrief. Changes to
@@ -181,8 +204,12 @@ Your tasks are simple, but the project can't move without them:
   realignment.
 
 **Stretching the $20 budget**
-- **The team is capped at 4 developers,** and the lead plans to fit your
+- **By default, at most 3 developers work in any one phase,** and you can
+  change that. A project with 4 or more developers in total is heavy, so the
+  lead checks with you before adding a 4th. The lead plans to fit your
   subscription.
+- **Dexter keeps the documents lean.** Every agent re-reads them each
+  session, so trimming finished material saves budget every time.
 - **Use fresh sessions.** Long chats cost more and get worse. Starting a new
   session with your lead is free of downside, because the documents hold
   the state.
@@ -195,29 +222,37 @@ Your tasks are simple, but the project can't move without them:
 
 ```
 Consultancy/
-├── README.md                  ← you are here
-├── .claude/agents/            ← agent profiles
-│   ├── consultant_rep_wren.md ← Wren
-│   ├── tech_lead_<name>.md    ← your lead (written by Wren)
-│   └── <role>_<name>.md       ← developers (written by the lead)
-├── client/                    ← everything for you
-│   ├── client_<name>.md       ← your profile (from the interview)
-│   ├── checklist.md           ← your tasks, one section per phase
-│   └── tutorials/             ← step-by-step help
+├── README.md                         ← you are here
+├── .claude/
+│   ├── agents/                       ← agent profiles
+│   │   ├── consultant_rep_wren.md    ← Wren
+│   │   ├── context_manager_dexter.md ← Dexter
+│   │   ├── tech_lead_<name>.md       ← your lead (written by Wren)
+│   │   └── <role>_<name>.md          ← developers (written by the lead)
+│   └── hooks/guard_stale.sh          ← keeps everyone but Dexter out of stale/
+├── client/                           ← everything for you
+│   ├── client_<name>.md              ← your profile (from the interview)
+│   ├── checklist.md                  ← your tasks, one section per phase
+│   └── tutorials/                    ← step-by-step help, and only here
 ├── docs/
-│   ├── high_level/            ← CLIENT_SPECS.md, DESIGN.md, PHASES.md
-│   ├── checklists/            ← one checklist per developer
-│   └── procedures/            ← ONBOARDING.md
-└── build/                     ← the product itself (a git repository)
+│   ├── high_level/                   ← CLIENT_SPECS.md, DESIGN.md, PHASES.md
+│   ├── checklists/                   ← one checklist per developer
+│   ├── procedures/                   ← ONBOARDING.md, DEBRIEF.md
+│   ├── templates/                    ← tech_lead.md, the template every lead comes from
+│   └── FROZEN_STATE.md               ← saved state, only while the project is frozen
+├── stale/                            ← Dexter's archive of old material
+└── build/                            ← the product itself (a git repository)
 ```
 
 ## Ground rules the agents follow
 
-| | Wren | Tech lead | Developers |
-|---|---|---|---|
-| Talks to you | ✅ | ✅ | ❌ |
-| Talks to agents in other repos | ❌ | ✅ | ❌ |
-| Writes `CLIENT_SPECS.md` / `DESIGN.md` / `PHASES.md` | ❌ | ✅ (spec changes need your approval) | ❌ |
-| Edits the lead's personality | ✅ (and nothing else in that file) | ❌ | ❌ |
-| Writes checklists and tutorials | ❌ | ✅ | ❌ |
-| Writes code in `build/` | ❌ | ❌ (reviews only) | ✅ |
+| | Wren | Tech lead | Developers | Dexter |
+|---|---|---|---|---|
+| Talks to you | ✅ | ✅ | ❌ | ❌ |
+| Talks to agents in other repos | ❌ | ✅ | ❌ | ❌ |
+| Writes `CLIENT_SPECS.md` / `DESIGN.md` / `PHASES.md` | ❌ | ✅ (spec changes need your approval) | ❌ | ❌ (archives finished parts of `DESIGN.md` / `PHASES.md`, with the lead's OK) |
+| Edits the lead's personality | ✅ (and nothing else in that file) | ❌ | ❌ | ❌ |
+| Writes checklists | ❌ | ✅ | ❌ (ticks off their own) | ❌ |
+| Writes tutorials (in `client/tutorials/` only) | ❌ | ✅ (reviews and finalizes) | ✅ (drafts) | ❌ |
+| Writes code in `build/` | ❌ | ❌ (reviews only) | ✅ | ❌ |
+| Opens `stale/` | ❌ | ❌ | ❌ | ✅ (only when the lead calls him in) |

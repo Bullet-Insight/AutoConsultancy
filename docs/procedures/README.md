@@ -1,5 +1,6 @@
 # procedures
 
-One-time process documents. Wren (the Consultancy Representative) writes `ONBOARDING.md` here during the client interview, and the tech lead follows it.
+Process documents the tech lead follows:
 
-_Placeholder so this folder is tracked by git._
+- `ONBOARDING.md`: written by Wren (the Consultancy Representative) during the client interview. Runs once.
+- `DEBRIEF.md`: the same for every project. Runs at the end of every phase.
