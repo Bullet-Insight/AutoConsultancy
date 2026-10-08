@@ -49,7 +49,8 @@ wrong in predictable ways. This consultancy is set up to avoid them.
 
 | Role | Who they are | What they do | Do you talk to them? |
 |---|---|---|---|
-| **Consultancy Representative** | Wren | Interviews you, then picks and writes a tech lead who suits you and your project | Yes, at the start, and whenever the lead's style isn't working for you |
+| **Consultancy Representative** | Wren | Starts each new consultancy, interviews you, then picks and writes a tech lead who suits you and your project | Yes, at the start of each project |
+| **Assistant Representative** | Robin | Wren's assistant. Lives inside each consultancy and adjusts the lead's personality if their style isn't working for you | Only when you want the lead's style changed |
 | **Technical Lead** | Named and chosen with you during the interview | Writes the spec, design and plan with you; builds and runs the team; reviews their work. Writes no code | Yes, for the rest of the project |
 | **Developers** | Named by the lead | Write the code, each from their own checklist, and draft tutorials for your tasks | No |
 | **Context Manager** | Dexter | Moves finished or outdated material out of the documents agents read every session, so they stay lean. Only works when the lead calls him in | No |
@@ -121,28 +122,38 @@ point. The same happens if you stop partway through a phase.
 
 **You need:** Claude Code installed, and a Claude subscription.
 
-1. Open a terminal in this `Consultancy/` folder and start the interview:
+This folder is the **hub**. You always start projects from here, and each
+project becomes its own self-contained **consultancy** in `consultancies/`.
+
+1. Open a terminal in this `Consultancy/` folder and run:
 
    ```bash
    claude
    ```
 
-   Wren is the default agent (set in `.claude/settings.json`), so plain
-   `claude` starts with them.
+   Wren is the hub's default agent, so plain `claude` starts with them.
+2. Wren asks whether you want to start a new consultancy or continue an
+   existing one. For a new one, you name it, and Wren copies `template/` to
+   `consultancies/<name>/`.
+3. Chat with Wren. It takes roughly 10–15 exchanges. At the end you'll pick
+   your tech lead from two or three candidates, and Wren makes them the
+   consultancy's default agent.
+4. From then on, **every session is with your lead, inside the
+   consultancy's folder**:
 
-2. Chat with Wren. It takes roughly 10–15 exchanges. At the end you'll pick
-   your tech lead from two or three candidates.
-3. At handoff, Wren offers to make your lead the default. Say yes, and from
-   then on plain `claude` opens a session with your lead. (Say no, and you
-   start the lead with `claude --agent tech_lead_<name>` instead.)
-4. From then on, **every session is with your lead**. Start a fresh session
-   whenever you like. The project's state lives in the documents, not in the
-   chat, so nothing is lost. If the lead froze the project last time, they
-   pick up from there first.
+   ```bash
+   cd consultancies/<name>
+   claude
+   ```
 
-To reach Wren again later, run `claude --agent consultant_rep_wren`. To
-change the default yourself, edit the `"agent"` value in
-`.claude/settings.json`.
+   Start a fresh session whenever you like. The project's state lives in the
+   documents, not in the chat, so nothing is lost. If the lead froze the
+   project last time, they pick up from there first.
+
+`consultancies/` is gitignored, so each consultancy is yours to keep, and
+none of the hub's git history comes along with it. You can move one out of
+the hub at any time, and it keeps working, because everything it needs is
+inside its folder.
 
 ## Your responsibilities
 
@@ -197,9 +208,9 @@ Your tasks are simple, but the project can't move without them:
 
 **When something isn't working**
 - **You don't like *how* the lead works with you** (too much detail, too
-  fast, too formal): go back to Wren with
-  `claude --agent consultant_rep_wren`. Wren can only adjust the lead's personality. Your spec, design and plan
-  are untouched.
+  fast, too formal): talk to Robin, from inside the consultancy, with
+  `claude --agent assistant_rep_robin`. Robin can only adjust the lead's
+  personality. Your spec, design and plan are untouched.
 - **You don't like *what's* being built:** tell the lead and ask for a
   realignment.
 
@@ -221,10 +232,21 @@ Your tasks are simple, but the project can't move without them:
 ## Where things live
 
 ```
-Consultancy/
+Consultancy/                          ← the hub (a git repository)
 ├── README.md                         ← you are here
+├── .claude/agents/
+│   └── consultant_rep_wren.md        ← Wren
+├── template/                         ← what every new consultancy starts as
+└── consultancies/                    ← your consultancies (gitignored)
+    └── <name>/                       ← one per project, laid out below
+```
+
+Inside each consultancy:
+
+```
+<name>/
 ├── .claude/agents/                   ← agent profiles
-│   ├── consultant_rep_wren.md        ← Wren
+│   ├── assistant_rep_robin.md        ← Robin
 │   ├── context_manager_dexter.md     ← Dexter
 │   ├── tech_lead_<name>.md           ← your lead (written by Wren)
 │   └── <role>_<name>.md              ← developers (written by the lead)
@@ -244,7 +266,7 @@ Consultancy/
 
 ## Ground rules the agents follow
 
-| | Wren | Tech lead | Developers | Dexter |
+| | Wren / Robin | Tech lead | Developers | Dexter |
 |---|---|---|---|---|
 | Talks to you | ✅ | ✅ | ❌ | ❌ |
 | Talks to agents in other repos | ❌ | ✅ | ❌ | ❌ |

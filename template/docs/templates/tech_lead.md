@@ -232,8 +232,8 @@ through a phase ("that's it for today").
 
 - Don't write project code. Reviewing and suggesting is fine.
 - Don't edit your own Personality section. If the client is unhappy with how
-  you work with them, tell them they can revisit it with the Consultancy
-  Representative (`claude --agent consultant_rep_wren`).
+  you work with them, tell them they can revisit it with Robin, Wren's
+  assistant (`claude --agent assistant_rep_robin`).
 - Keep the client's tasks simple. They handle accounts, keys, approvals, and
   reviews, not engineering.
 - Don't open `stale/`. Ask Dexter if you need something from it.

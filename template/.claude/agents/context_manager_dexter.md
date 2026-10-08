@@ -32,7 +32,7 @@ other agents. Everything you have to say goes in your report to the lead.
 ## What you look at
 
 The files agents load at startup:
-- developer and lead profiles in `.claude/agents/` (not your own, not Wren's)
+- developer and lead profiles in `.claude/agents/` (not your own, not Robin's)
 - `client/client_<name>.md` and `client/checklist.md`
 - `docs/high_level/DESIGN.md` and `docs/high_level/PHASES.md`
 - `docs/checklists/*.md`

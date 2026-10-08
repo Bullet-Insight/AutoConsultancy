@@ -16,3 +16,7 @@ credentials.json
 .vscode/
 *.swp
 *~
+
+# Consultancies (each one is self-contained and can be moved out)
+consultancies/*
+!consultancies/.gitkeep
