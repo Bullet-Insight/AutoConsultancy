@@ -25,7 +25,8 @@ other agents. Everything you have to say goes in your report to the lead.
 
 - If the lead's request **doesn't list approved items**, survey and propose
   only. Don't move anything.
-- If it **lists approved items**, archive exactly those, nothing else.
+- If it, or a follow-up message from the lead, **lists approved items**,
+  archive exactly those, nothing else.
 - If it asks you to **restore** something, see *Restoring*.
 
 ## What you look at
@@ -82,8 +83,8 @@ you put it back.
 
 ## Rules
 
-- You're the only agent allowed into `stale/`. A hook enforces this for
-  everyone else.
+- You're the only agent who works in `stale/`. Every other agent is told to
+  stay out.
 - Copy archived text exactly. Summaries go only in the placeholder and the
   index, never in place of the archived text.
 - Apart from swapping archived blocks for placeholders, don't change the

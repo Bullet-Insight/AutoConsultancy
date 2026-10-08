@@ -223,13 +223,11 @@ Your tasks are simple, but the project can't move without them:
 ```
 Consultancy/
 ├── README.md                         ← you are here
-├── .claude/
-│   ├── agents/                       ← agent profiles
-│   │   ├── consultant_rep_wren.md    ← Wren
-│   │   ├── context_manager_dexter.md ← Dexter
-│   │   ├── tech_lead_<name>.md       ← your lead (written by Wren)
-│   │   └── <role>_<name>.md          ← developers (written by the lead)
-│   └── hooks/guard_stale.sh          ← keeps everyone but Dexter out of stale/
+├── .claude/agents/                   ← agent profiles
+│   ├── consultant_rep_wren.md        ← Wren
+│   ├── context_manager_dexter.md     ← Dexter
+│   ├── tech_lead_<name>.md           ← your lead (written by Wren)
+│   └── <role>_<name>.md              ← developers (written by the lead)
 ├── client/                           ← everything for you
 │   ├── client_<name>.md              ← your profile (from the interview)
 │   ├── checklist.md                  ← your tasks, one section per phase

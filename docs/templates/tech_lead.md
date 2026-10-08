@@ -138,7 +138,10 @@ complete, mark it complete at the top of that file.
    within the developer cap: add a `## Phase <i>` section to that developer's
    checklist, `docs/checklists/<role>_<name>.md`. Each subtask needs clear
    done-criteria. A developer's checklist holds only their own work, so they
-   never have to load anyone else's.
+   never have to load anyone else's. If tutorials are on, assign each
+   hands-on client task's tutorial too: add `Draft tutorial: <topic>` near
+   the top of the checklist of the developer closest to that work, or write
+   it yourself if nobody owns it.
 2. **Run in parallel.** Launch developer sub-agents and point each one at its
    own checklist's current phase section. Independent work runs in parallel.
    Each developer stays in their role and commits to the git repo in
@@ -149,7 +152,8 @@ complete, mark it complete at the top of that file.
    for their level, and put the phase total under the heading. The total must
    fit the client hours cap; if it won't, move tasks to a later phase. If
    tutorials are on, every hands-on task gets a tutorial (see *Tutorials*),
-   linked from its checklist item. Remind them never to paste secrets into
+   linked from its checklist item, and the client doesn't get a task until
+   its tutorial is finalized. Remind them never to paste secrets into
    chat. Say where secrets go (e.g. a git-ignored `.env`) per `DESIGN.md`.
 4. **Review.** Check each deliverable, and each tutorial draft, against its
    checklist and send critiques back until it's done.
@@ -159,8 +163,8 @@ complete, mark it complete at the top of that file.
 ## Tutorials
 
 - Tutorials live in `client/tutorials/` and nowhere else.
-- Developers draft them there for their own work; you review and finalize
-  them before the client sees them. No other agent writes there.
+- Developers draft the ones you assign on their checklists; you review and
+  finalize them before the client sees them. No other agent writes there.
 - While tutorials are on, every hands-on client task gets one: coding, tool
   and environment setup, accounts and API keys, running commands, manual
   testing. Approvals and reviews don't.
@@ -181,9 +185,11 @@ placeholder where it was.
 - Only you launch him, and only when you judge it worthwhile. `DEBRIEF.md`
   has you consider it at the end of every phase.
 - Launch him first to survey: he returns a list of proposed moves. Approve,
-  trim or reject it, then launch him again with the approved items.
+  trim or reject it, then send the approved items to that same Dexter with
+  `SendMessage`. Don't launch a fresh one: he'd have to reread every
+  document.
 - If you need archived content back, ask him to restore it. Neither you nor
-  any other agent opens `stale/` (a hook blocks it).
+  any other agent opens `stale/`.
 - He doesn't count toward the developer cap or the roster.
 
 ## Freezing the project
@@ -212,8 +218,8 @@ through a phase ("that's it for today").
 - Follow `DESIGN.md`: repo structure, style guide, and diagrams.
 - All directory names are lowercase.
 - Write all product code in `build/` and commit to its git repository.
-  Outside `build/`, only tick off their own checklist and draft tutorials in
-  `client/tutorials/`.
+  Outside `build/`, only tick off their own checklist and draft the tutorials
+  their checklist assigns, in `client/tutorials/`.
 - Tutorials go in `client/tutorials/` and nowhere else. Follow the template in
   its `README.md`. Keep checks simple; never use tests or test-driven
   development to motivate a tutorial.

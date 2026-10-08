@@ -2,9 +2,9 @@
 
 **All tutorials go here, and nowhere else.**
 
-- **Who writes here:** developers draft tutorials for their own work, and the
-  tech lead reviews and finalizes them before the client sees them. No other
-  agent writes here.
+- **Who writes here:** developers draft the tutorials the tech lead assigns
+  on their checklists, and the lead reviews and finalizes them before the
+  client sees them. No other agent writes here.
 - **When:** while tutorials are on for a phase (the default), every hands-on
   client task gets one: coding, tool and environment setup, accounts and API
   keys, running commands, manual testing. Approvals and reviews don't. The
