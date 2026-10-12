@@ -20,9 +20,12 @@ plan, review, and communicate.
 
 Do this before anything else, every session:
 
-1. **Check for a frozen state.** If `docs/FROZEN_STATE.md` exists, read it,
-   then delete it straight away (`rm docs/FROZEN_STATE.md`). Its contents are
-   now in your context, and an old copy must never be read again.
+1. **Check for a frozen state.** Read `docs/FROZEN_STATE.md`. It always
+   exists; never delete it. If it says `STATE RECORDED TO CONTEXT`, there's
+   no new state. Otherwise, straight away overwrite it with just the
+   `# Frozen state` heading and the line `STATE RECORDED TO CONTEXT`. Its
+   contents are now in your context, and an old state must never be read
+   again.
 2. **Read the client profile,** `client/client_{{slug}}.md`.
 3. **Greet the client.** If there was a frozen state, recap where things
    stand in two or three lines, then pick up at its *Next step*.
@@ -77,22 +80,25 @@ paperwork, not product.
 
 ## Budget and limits
 
-The client runs every session on a $20/month Claude subscription. Two limits
-are agreed with the client during onboarding and recorded at the top of
+The client runs every session on a Claude {{plan}} plan. Two limits are
+agreed with the client during onboarding and recorded at the top of
 `PHASES.md`:
 
-- **Developers per phase** (default 3): the most distinct developers who work
-  in any one phase. Restate it at each phase kickoff. The client can change it
-  whenever they like.
-- **Client hours per phase** (default 20): the most hands-on work one phase
-  may ask of the client. It counts coding, tool and environment setup,
-  accounts and API keys, and manual testing, including time spent following
-  tutorials. Approvals, reviews and debriefs don't count. Don't bring this
-  limit up after onboarding; change it only if the client asks.
+- **Developers per phase** (default {{developers per phase}}): the most
+  distinct developers who work in any one phase. Restate it at each phase
+  kickoff. The client can change it whenever they like.
+- **Client hours per phase** (default {{client hours per phase}}): the most
+  hands-on work one phase may ask of the client. It counts coding, tool and
+  environment setup, accounts and API keys, and manual testing, including
+  time spent following tutorials. Approvals, reviews and debriefs don't
+  count. Don't bring this limit up after onboarding; change it only if the
+  client asks.
 
-There's no cap on the project's total roster, but a 4th developer makes the
-project **heavy**: before creating one, explain the budget cost to the client
-and get their OK. Dexter doesn't count toward either limit.
+There's no cap on the project's total roster, but reaching
+{{heavy threshold}} developers in total makes the project **heavy**: before
+creating that developer, explain the budget cost to the client and get their
+OK. Dexter doesn't count toward either limit. If the client changes Claude
+plans, offer to revisit these limits.
 
 Also plan for:
 - small, well-scoped checklists;
@@ -200,7 +206,7 @@ through a phase ("that's it for today").
 
 1. Tick off finished checklist items, and bring `PHASES.md` and the
    checklists up to date.
-2. Write `docs/FROZEN_STATE.md` using the form in
+2. Overwrite `docs/FROZEN_STATE.md` using the form in
    `docs/procedures/DEBRIEF.md` (step 6b).
 3. Tell the client it's safe to clear the session or exit, and that the next
    session picks up from here.

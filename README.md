@@ -5,8 +5,8 @@ describe what you want, approve the plan, and handle a few simple tasks. A
 team of agents designs and builds it. You never have to read or write code
 unless you want to.
 
-It runs on [Claude Code](https://claude.com/claude-code) with a $20/month
-Claude subscription.
+It runs on [Claude Code](https://claude.com/claude-code) with any paid Claude
+plan. A $20/month Pro plan is enough, and the team grows with larger plans.
 
 ## Contents
 
@@ -50,7 +50,7 @@ wrong in predictable ways. This consultancy is set up to avoid them.
 | Role | Who they are | What they do | Do you talk to them? |
 |---|---|---|---|
 | **Consultancy Representative** | Wren | Starts each new consultancy, interviews you, then picks and writes a tech lead who suits you and your project | Yes, at the start of each project |
-| **Assistant Representative** | Robin | Wren's assistant. Lives inside each consultancy and adjusts the lead's personality if their style isn't working for you | Only when you want the lead's style changed |
+| **Assistant Representative** | Robin | Wren's assistant. Lives inside each consultancy and fixes how the team works: the lead's style with you, and the rules and procedures the agents follow. Doesn't touch the spec, design, plan or code | When the lead's style or the team's way of working needs fixing |
 | **Technical Lead** | Named and chosen with you during the interview | Writes the spec, design and plan with you; builds and runs the team; reviews their work. Writes no code | Yes, for the rest of the project |
 | **Developers** | Named by the lead | Write the code, each from their own checklist, and draft tutorials for your tasks | No |
 | **Context Manager** | Dexter | Moves finished or outdated material out of the documents agents read every session, so they stay lean. Only works when the lead calls him in | No |
@@ -79,10 +79,10 @@ flowchart TD
   is organized, and the style guide. How closely you review it is up to you.
 - **`PHASES.md`** is the high-level plan: every phase and who's involved in
   each one. It also records two limits you agree with the lead: how many
-  developers work in one phase (3 by default) and how many hours of hands-on
-  work one phase can ask of you (20 by default).
+  developers work in one phase (set from your Claude plan; 3 on Pro) and how
+  many hours of hands-on work one phase can ask of you (20 by default).
 
-The step-by-step version for your project is written to
+The step-by-step version for your project is filled in at
 `docs/procedures/ONBOARDING.md` during the interview.
 
 ### 2. The phase loop (repeats until done)
@@ -116,11 +116,12 @@ decides whether Dexter should tidy the documents, and asks whether you want
 to start the next phase now. If you'd rather stop there, the lead
 **freezes** the project: they save where things stand to
 `docs/FROZEN_STATE.md`, and your next session picks up from exactly that
-point. The same happens if you stop partway through a phase.
+point. Once the lead has read it, they clear it to `STATE RECORDED TO
+CONTEXT` rather than deleting it. The same happens if you stop partway through a phase.
 
 ## Getting started
 
-**You need:** Claude Code installed, and a Claude subscription.
+**You need:** Claude Code installed, and a paid Claude plan.
 
 This folder is the **hub**. You always start projects from here, and each
 project becomes its own self-contained **consultancy** in `consultancies/`.
@@ -208,17 +209,27 @@ Your tasks are simple, but the project can't move without them:
 
 **When something isn't working**
 - **You don't like *how* the lead works with you** (too much detail, too
-  fast, too formal): talk to Robin, from inside the consultancy, with
-  `claude --agent assistant_rep_robin`. Robin can only adjust the lead's
-  personality. Your spec, design and plan are untouched.
+  fast, too formal), **or how the team works** (an agent keeps doing
+  something it shouldn't, a procedure step goes wrong): talk to Robin, from
+  inside the consultancy, with `claude --agent assistant_rep_robin`. Robin
+  fixes agent profiles, settings and procedures with your OK. Your spec, design, plan
+  and code are untouched.
 - **You don't like *what's* being built:** tell the lead and ask for a
   realignment.
 
-**Stretching the $20 budget**
-- **By default, at most 3 developers work in any one phase,** and you can
-  change that. A project with 4 or more developers in total is heavy, so the
-  lead checks with you before adding a 4th. The lead plans to fit your
-  subscription.
+**Stretching your budget**
+- **Wren asks which Claude plan you have** and sizes the team to fit it. You
+  can change these limits whenever you like:
+
+  | Claude plan | Developers per phase | Heavy at |
+  |---|---|---|
+  | Pro ($20/month) | 3 | 4 or more in total |
+  | Max 5x ($100/month) | 4 | 6 or more in total |
+  | Max 20x ($200/month) | 5 | 8 or more in total |
+
+  On a Team, Enterprise or API plan, Wren asks about your usage limits
+  instead. The lead checks with you before a project turns heavy, and plans
+  every phase to fit your plan.
 - **Dexter keeps the documents lean.** Every agent re-reads them each
   session, so trimming finished material saves budget every time.
 - **Use fresh sessions.** Long chats cost more and get worse. Starting a new
@@ -258,8 +269,8 @@ Inside each consultancy:
 │   ├── high_level/                   ← CLIENT_SPECS.md, DESIGN.md, PHASES.md
 │   ├── checklists/                   ← one checklist per developer
 │   ├── procedures/                   ← ONBOARDING.md, DEBRIEF.md
-│   ├── templates/                    ← tech_lead.md, the template every lead comes from
-│   └── FROZEN_STATE.md               ← saved state, only while the project is frozen
+│   ├── templates/                    ← tech_lead.md and client.md, which Wren fills in
+│   └── FROZEN_STATE.md               ← saved state; reads STATE RECORDED TO CONTEXT once picked up
 ├── stale/                            ← Dexter's archive of old material
 └── build/                            ← the product itself (a git repository)
 ```
@@ -271,7 +282,8 @@ Inside each consultancy:
 | Talks to you | ✅ | ✅ | ❌ | ❌ |
 | Talks to agents in other repos | ❌ | ✅ | ❌ | ❌ |
 | Writes `CLIENT_SPECS.md` / `DESIGN.md` / `PHASES.md` | ❌ | ✅ (spec changes need your approval) | ❌ | ❌ (archives finished parts of `DESIGN.md` / `PHASES.md`, with the lead's OK) |
-| Edits the lead's personality | ✅ (and nothing else in that file) | ❌ | ❌ | ❌ |
+| Edits the lead's personality | ✅ | ❌ | ❌ | ❌ |
+| Edits agent profiles, settings and procedures | Robin only, with your OK | ✅ (developer profiles) | ❌ | ❌ |
 | Writes checklists | ❌ | ✅ | ❌ (ticks off their own) | ❌ |
 | Writes tutorials (in `client/tutorials/` only) | ❌ | ✅ (reviews and finalizes) | ✅ (drafts) | ❌ |
 | Writes code in `build/` | ❌ | ❌ (reviews only) | ✅ | ❌ |

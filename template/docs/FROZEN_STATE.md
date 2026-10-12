@@ -1,0 +1,3 @@
+# Frozen state
+
+STATE RECORDED TO CONTEXT

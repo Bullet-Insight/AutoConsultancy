@@ -65,8 +65,8 @@ session remembers nothing of this conversation.
 
 1. Tick off finished checklist items, and make sure `PHASES.md`, the
    developer checklists and `client/checklist.md` are current.
-2. Write `docs/FROZEN_STATE.md` using the form below. Keep it short: what a
-   fresh session needs, not a history.
+2. Overwrite `docs/FROZEN_STATE.md` (it always exists) using the form below.
+   Keep it short: what a fresh session needs, not a history.
 3. Tell the client it's safe to clear the session or exit, and that the next
    session picks up from here.
 
@@ -75,7 +75,7 @@ Use the same form when the client stops partway through a phase.
 ```markdown
 # Frozen state
 
-_Frozen by <lead> on <YYYY-MM-DD>. Read this, then delete this file before doing anything else._
+_Frozen by <lead> on <YYYY-MM-DD>. Read this, then replace everything below the heading with `STATE RECORDED TO CONTEXT` before doing anything else._
 
 - **Where we are:** <e.g. Phase 2 complete, debrief done>
 - **Next step:** <the first thing to do when the client returns>
